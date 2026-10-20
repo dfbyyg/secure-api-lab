@@ -7,7 +7,7 @@ on:
 
 jobs:
   sast:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # 固定系统版本，消除 Ubuntu 26 的 Notice
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -16,10 +16,10 @@ jobs:
       - name: Install Bandit
         run: pip install bandit
       - name: Run SAST (Bandit)
-        run: bandit -r . -ll -ii
+        run: bandit -r . -ll -ii -x ./.venv,./fix # 排除无关文件夹，防止误报
 
   sca:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # 固定系统版本，消除 Ubuntu 26 的 Notice
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
