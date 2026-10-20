@@ -9,23 +9,24 @@ jobs:
   sast:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install Bandit
-        run: pip install bandit
-      - name: Run SAST (Bandit)
-        run: bandit -r . -ll -ii
+      - name: Clone Repo manually
+        run: git clone https://github.com/${{ github.repository }}.git .
+      - name: Install Bandit and Run
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install bandit
+          bandit -r . -ll -ii -x ./.venv,./fix
 
   sca:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install pip-audit
-        run: pip install pip-audit
-      - name: Run SCA (pip-audit)
-        run: pip-audit -r requirements.txt
+      - name: Clone Repo manually
+        run: git clone https://github.com/${{ github.repository }}.git .
+      - name: Install pip-audit and Run
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install pip-audit
+          pip3 install -r requirements.txt
+          pip3-audit -r requirements.txt
