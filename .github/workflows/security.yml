@@ -16,7 +16,14 @@ jobs:
       - name: Install Bandit
         run: pip install bandit
       - name: Run SAST (Bandit)
-        run: bandit -r . -ll -ii -x ./.venv,./fix # 排除无关文件夹，防止误报
+        # 修改了这里：把扫描结果直接输出到 bandit-report.txt 文件中
+        run: bandit -r . -ll -ii -x ./.venv,./fix -f txt -o bandit-report.txt
+      - name: Upload SAST Report
+        # 新增：上传报告
+        uses: actions/upload-artifact@v4
+        with:
+          name: sast-report
+          path: bandit-report.txt
 
   sca:
     runs-on: ubuntu-22.04 # 固定系统版本，消除 Ubuntu 26 的 Notice
@@ -28,4 +35,11 @@ jobs:
       - name: Install pip-audit
         run: pip install pip-audit
       - name: Run SCA (pip-audit)
-        run: pip-audit -r requirements.txt
+        # 修改了这里：把结果输出到文件。|| true 是为了防止扫描出漏洞时流水线变红中断（方便你拿到报告）
+        run: pip-audit -r requirements.txt > sca-report.txt || true
+      - name: Upload SCA Report
+        # 新增：上传报告
+        uses: actions/upload-artifact@v4
+        with:
+          name: sca-report
+          path: sca-report.txt
