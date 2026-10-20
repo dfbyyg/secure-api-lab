@@ -20,7 +20,7 @@ jobs:
         run: bandit -r . -ll -ii -x ./.venv,./fix -f txt -o bandit-report.txt
       - name: Upload SAST Report
         # 新增：上传报告
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: sast-report
           path: bandit-report.txt
@@ -39,7 +39,7 @@ jobs:
         run: pip-audit -r requirements.txt > sca-report.txt || true
       - name: Upload SCA Report
         # 新增：上传报告
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: sca-report
           path: sca-report.txt
