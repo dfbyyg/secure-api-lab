@@ -21,8 +21,8 @@ jobs:
   sca:
     runs-on: ubuntu-22.04 # 固定系统版本，消除 Ubuntu 26 的 Notice
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
       - name: Install pip-audit
