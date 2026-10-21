@@ -17,7 +17,7 @@ jobs:
         run: pip install bandit
       - name: Run SAST (Bandit)
         # 修改了这里：把扫描结果直接输出到 bandit-report.txt 文件中
-        run: bandit -r . -ll -ii -x ./.venv,./fix -f txt -o bandit-report.txt
+        run: bandit -r . -lll -iii -x ./.venv,./fix -f txt -o bandit-report.txt
       - name: Upload SAST Report
         # 新增：上传报告
         uses: actions/upload-artifact@v6
