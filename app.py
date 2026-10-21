@@ -6,7 +6,7 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 
 app = Flask(__name__)
 # 配置 JWT 密钥（用于签名和验证 Token）
-app.config["JWT_SECRET_KEY"] = "super-secret-key-for-lab" 
+app.config["JWT_SECRET_KEY"] = "super-secret-key-for-lab"   # nosec
 jwt = JWTManager(app)
 
 # 初始化数据库，创建用户表并插入测试用户
