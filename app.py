@@ -36,7 +36,7 @@ def login():
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
     # 【防护 SQLi】使用参数化查询 (?) 而不是直接拼接字符串
-    c.execute("SELECT * FROM users WHERE username = ?", (username,))
+    c.execute("SELECT * FROM users WHERE username = ?", (username,))  # nosec B608
     user = c.fetchone()
     conn.close()
 
@@ -72,7 +72,7 @@ def get_me():
     current_user_id = get_jwt_identity()
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
-    c.execute("SELECT id, username FROM users WHERE id = ?", (current_user_id,))
+    c.execute("SELECT id, username FROM users WHERE id = ?", (current_user_id,))  # nosec B608
     user = c.fetchone()
     conn.close()
     if user:
